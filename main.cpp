@@ -1,6 +1,9 @@
 #include "assembler.h"
 #include "cpu.h"
+#include "disassembler.h"
 #include <cstdint>
+#include <string>
+#include <vector>
 
 int main() {
   two_b_completed cpu;
@@ -11,6 +14,8 @@ int main() {
   };
   two_b_completed_assembler assembler;
   std::vector<uint8_t> program = assembler.assemble(test);
+  two_b_completed_disassembler disassembler;
+  std::vector<std::string> assembly = disassembler.disassemble(program);
   cpu.read_program(program);
 
   cpu.step();

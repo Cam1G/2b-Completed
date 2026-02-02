@@ -28,7 +28,7 @@ public:
 };
 
 const std::unordered_map<std::string, uint8_t>
-    two_b_completed_assembler::opcodes = {
+    two_b_completed_assembler::opcodes_to_bin = {
         {"LDST", 0b00}, {"NAND", 0b01}, {"CMP", 0b10}, {"ADDEQ", 0b11}};
 
 two_b_completed_assembler::two_b_completed_assembler() {}
@@ -39,7 +39,7 @@ two_b_completed_assembler::assemble(std::vector<std::string> &program) {
   for (int line = 0; line < program.size(); line++) {
     // Read for a hex value
     if (program[line].substr(0, 2) == "0x") {
-      uint hex_value = stoi(program[line].substr(2), nullptr, 16);
+      uint hex_value = std::stoi(program[line].substr(2), nullptr, 16);
       if (hex_value > 255)
         throw literalOutOfRangeException();
 
@@ -57,12 +57,12 @@ two_b_completed_assembler::assemble(std::vector<std::string> &program) {
           program[line].substr(space_index + 2, comma_index - space_index - 2);
       std::string ry = program[line].substr(comma_index + 3);
       // Returns true if the opcode doesn't exist
-      if (opcodes.count(opcode) == 0)
+      if (opcodes_to_bin.count(opcode) == 0)
         throw opcodeDoesNotExistException();
 
       // Shifts the registers and opcode to the correct places
       uint8_t binary_instruction =
-          (opcodes.at(opcode) << 6) | stoi(rx) << 3 | stoi(ry);
+          (opcodes_to_bin.at(opcode) << 6) | std::stoi(rx) << 3 | std::stoi(ry);
       binary.push_back(binary_instruction);
     }
   }

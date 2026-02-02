@@ -9,8 +9,7 @@
 
 class two_b_completed_assembler {
 private:
-  std::array<uint8_t, 256> program;
-  static const std::unordered_map<std::string, uint8_t> opcodes;
+  static const std::unordered_map<std::string, uint8_t> opcodes_to_bin;
 
 public:
   two_b_completed_assembler();
