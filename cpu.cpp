@@ -1,6 +1,7 @@
 #include "cpu.h"
 #include <algorithm>
 #include <cstdint>
+#include <iostream>
 #include <string>
 #include <utility>
 
