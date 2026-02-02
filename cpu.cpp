@@ -1,9 +1,8 @@
 #include "cpu.h"
-#include <algorithm>
+#include "mmu.h"
 #include <cstdint>
 #include <iostream>
 #include <string>
-#include <utility>
 
 class programTooLargeException : public std::exception {
 private:
@@ -24,24 +23,27 @@ public:
 two_b_completed::two_b_completed() { two_b_completed::status_flag = true; }
 
 void two_b_completed::read_program(std::vector<uint8_t> &program) {
-  if (program.size() > memory.size()) {
+  if (program.size() > BANK_SIZE) {
     throw programTooLargeException();
   }
 
   for (int i = 0; i < program.size(); i++) {
-    memory[i] = program[i];
+    mmu.write(i, program[i]);
   }
 }
 
 void two_b_completed::step() {
-  const uint8_t current_instruction = memory[registers[PC_REGISTER]];
+  const uint8_t current_instruction = mmu.read(registers[PC_REGISTER]);
   const uint8_t opcode = current_instruction >> 6;
   const uint8_t rx = (current_instruction >> 3) & 0x7;
   const uint8_t ry = current_instruction & 0x7;
   switch (opcode) {
-  case 0b00: // LDST rx, [ry]
-    std::swap(registers[rx], memory[registers[ry]]);
+  case 0b00: { // LDST rx, [ry]
+    uint8_t temp = mmu.read(registers[ry]);
+    mmu.write(registers[ry], registers[rx]);
+    registers[rx] = temp;
     break;
+  }
   case 0b01: // NAND rx, ry
     registers[rx] = ~(registers[rx] & registers[ry]);
     break;
@@ -55,5 +57,8 @@ void two_b_completed::step() {
   default:
     throw unreachableOpcodeException();
   }
+
+  std::cout << +registers[4] << "\n";
+
   registers[PC_REGISTER]++;
 }
