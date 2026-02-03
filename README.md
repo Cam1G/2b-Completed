@@ -48,7 +48,7 @@ ADDEQ (ADD if Equal To) if the status flag is true then add the two numbers and 
 
 ## Tricks
 
-To force an ADDEQ to add any two numbers if the flag is currently 0.
+**To force an ADDEQ to add any two numbers if the flag is currently 0.**
 
 ```
 CMP RX, RX
@@ -57,7 +57,7 @@ ADDEQ RX, RY
 
 We know RX == RX so ADDEQ will always work after this CMP.
 
-As LDST is one instruction is hard copy values to multiple registers . The way to do this using our assembly is
+**Copying registers to each other.** As LDST is one instruction is hard copy values to multiple registers . The way to do this using our assembly is
 
 ```
 NAND RX, R1
@@ -66,4 +66,13 @@ ADDEQ RX, RY
 ```
 
 As we know R1 is 0 NAND RX turns it into 0b11111111 and NAND-ed with itself makes 0 which you can add the value in the register you want to copy to RX.
+
+**Branching**, to branch we can do an ADDEQ to register 0 which holds the program counter
+
+```
+CMP RX, RY
+ADDEQ R0, RZ
+```
+
+This program says if RX == RY when skip RZ amount of lines.
 
