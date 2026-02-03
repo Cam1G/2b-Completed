@@ -8,7 +8,6 @@
 #include <vector>
 
 constexpr int PC_REGISTER = 0;
-constexpr int BANK_SWITCHING_ADDRESS = 0xFF;
 
 class two_b_completed {
 private:

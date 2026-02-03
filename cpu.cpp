@@ -44,21 +44,19 @@ void two_b_completed::step() {
     registers[rx] = temp;
     break;
   }
-  case 0b01: // NAND rx, ry
+  case 0b01: // nand rx, ry
     registers[rx] = ~(registers[rx] & registers[ry]);
     break;
-  case 0b10: // CMP rx, ry
+  case 0b10: // cmp rx, ry
     status_flag = registers[rx] == registers[ry];
     break;
-  case 0b11: // ADDEQ rx, ry
+  case 0b11: // addeq rx, ry
     if (status_flag)
       registers[rx] += registers[ry];
     break;
   default:
     throw unreachableOpcodeException();
   }
-
-  std::cout << +registers[4] << "\n";
 
   registers[PC_REGISTER]++;
 }

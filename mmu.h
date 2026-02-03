@@ -6,6 +6,9 @@
 
 constexpr int BANK_SIZE = 256;
 constexpr int BANK_COUNT = 256;
+constexpr int BANK_SWITCHING_ADDRESS = 0xFF;
+
+constexpr uint8_t BYTE_OUT_ADDRESS = 0xFE;
 
 class two_b_completed_mmu {
 private:
