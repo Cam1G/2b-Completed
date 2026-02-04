@@ -23,11 +23,11 @@ Register 0 is the program counter.
 
 Register 1 contains 0.
 
-Register 2 - 7 constains powers of 2 to make writing program easier.
+Register 2 - 7 contains powers of 2 to make writing program easier.
 
 **Memory**
 
-The registers can address 256 bytes of memory so I implemented memory banking with address 0xFF being the memory address that controls which bank the CPU is using. To get an output from the CPU you write to the byte out address which is 0xFE. With 256 banks this gives 65536 addressable memory locations in total. 
+The registers can address 256 bytes of memory so I implemented memory banking with address 0xFF being the memory address that controls which bank the CPU is using. With 256 banks this gives 65536 addressable memory locations in total. To get an output from the CPU you write to the byte out address which is 0xFE. 
 
 **LDST** - rx, [ry]
 
@@ -35,7 +35,7 @@ LDST (Load-store) works by taking the value in register x and swapping it with t
 
 **NAND** - rx, ry
 
-NAND performed a NAND on ry and puts the result in rx.
+NAND performed a NAND on rx and ry and puts the result in rx.
 
 **CMP** - rx, ry
 
